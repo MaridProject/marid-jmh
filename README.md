@@ -1,4 +1,4 @@
-maven-jmh
+marid-jmh
 ===
 
 This library is intended to run JMH benchmarks in any JVM language without
