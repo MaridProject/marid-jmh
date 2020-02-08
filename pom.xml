@@ -18,6 +18,13 @@
     </license>
   </licenses>
 
+  <scm>
+    <connection>scm:git:https://github.com/MaridProject/marid-jmh.git</connection>
+    <developerConnection>scm:git:https://github.com/MaridProject/marid-jmh.git</developerConnection>
+    <url>http://sf.net/p/marid/code</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <properties>
     <java.version>11</java.version>
     <maven.compiler.release>${java.version}</maven.compiler.release>
