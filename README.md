@@ -29,8 +29,8 @@ Maven Central coordinates:
 Requirements
 ===
 
-Java: 11 or later
-JMH: >= 1.20
+* Java: 11 or later
+* JMH: >= 1.20
 
 ```xml
 <dependency>
