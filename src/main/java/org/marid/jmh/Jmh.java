@@ -9,9 +9,9 @@ package org.marid.jmh;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,6 +30,8 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.format.OutputFormat;
 import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.VerboseMode;
+import org.openjdk.jmh.util.UnCloseablePrintStream;
 import sun.reflect.ReflectionFactory;
 
 import javax.tools.DiagnosticCollector;
@@ -39,9 +41,11 @@ import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UncheckedIOException;
+import java.nio.charset.Charset;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,6 +62,7 @@ import static javax.tools.StandardLocation.CLASS_OUTPUT;
 import static javax.tools.StandardLocation.SOURCE_PATH;
 import static org.openjdk.jmh.runner.BenchmarkList.BENCHMARK_LIST;
 import static org.openjdk.jmh.runner.CompilerHints.LIST;
+import static org.openjdk.jmh.runner.format.OutputFormatFactory.createFormatInstance;
 
 public class Jmh {
 
@@ -161,11 +166,15 @@ public class Jmh {
 
   private static OutputFormat defaultOutputFormat(Options options) {
     try {
-      final var method = Runner.class.getDeclaredMethod("createOutputFormat", Options.class);
-      method.setAccessible(true);
-      return (OutputFormat) method.invoke(null, options);
-    } catch (ReflectiveOperationException e) {
-      throw new IllegalStateException(e);
+      final PrintStream printStream;
+      if (options.getOutput().hasValue()) {
+        printStream = new PrintStream(options.getOutput().get());
+      } else {
+        printStream = new UnCloseablePrintStream(System.out, Charset.defaultCharset());
+      }
+      return createFormatInstance(printStream, options.verbosity().orElse(VerboseMode.NORMAL));
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
     }
   }
 
