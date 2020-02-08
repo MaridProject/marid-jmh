@@ -25,3 +25,17 @@ Maven Central coordinates:
     <version>1.0</version>
 </dependency>
 ``` 
+
+Requirements
+===
+
+Java: 11 or later
+JMH: >= 1.20
+
+```xml
+<dependency>
+   <groupId>org.openjdk.jmh</groupId>
+   <artifactId>jmh-generator-reflection</artifactId>
+   <version><!-- PLACE YOUR PREFERRED JMH VERSION HERE --></version>
+</dependency>
+```
