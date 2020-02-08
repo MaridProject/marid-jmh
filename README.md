@@ -15,4 +15,13 @@ This library
  * patches Runner instance to provide a proper path to BenchmarkList file
  * temporarily replaces java.class.path property with an extended one (by appending temporary directory
    to the end)
- * runs the Runner and returns RunResult collection    
+ * runs the Runner and returns RunResult collection
+ 
+Maven Central coordinates:
+```xml
+<dependency>
+    <groupId>org.marid</groupId>
+    <artifactId>marid-jmh</artifactId>
+    <version>1.0</version>
+</dependency>
+``` 
